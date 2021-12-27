@@ -75,7 +75,7 @@ row_length = 9 #number of rows
 col_length = 9 #number of columns
 
 board = [[0] * col_length for x in range(row_length)]
-board_display = [["O"] * col_length for x in range(row_length)] #list comprehension to display 0's as board that will be passed as argument
+board_display = [["."] * col_length for x in range(row_length)] #list comprehension to display 0's as board that will be passed as argument
 
 ships_to_destroy = 4 #number of ships to destroy
 max_ships_size= 5 #max length of ships
@@ -142,7 +142,7 @@ def user_get_row():
             if guess in range(1, row_length + 1):
                 return guess - 1
             else:
-                print("\nOops, that's not even in the ocean.")
+                print("\nAre you sure that's on the board?")
         except TypeError:
             print("\nPlease enter a letter")
         except ValueError:
@@ -158,25 +158,24 @@ def user_get_col():
             if guess in range(1, col_length + 1):
                 return guess - 1
             else:
-                print("\nOops, that's not even in the ocean.")
+                print("\nAre you sure that's on the board?")
         except ValueError:
             print("\nPlease enter a number")
 
+temp = 0
+while temp < ships_to_destroy:
+    ship_info = random_location()
+    if ship_info == 'None':
+        continue
+    else:
+        ship_list.append(Board(ship_info['size'], ship_info['orientation'], ship_info['location']))
+        temp += 1
+del temp   
 
 def main():
     """
     Run all program functions and active states
-    """     
-    temp = 0
-    while temp < ships_to_destroy:
-        ship_info = random_location()
-        if ship_info == 'None':
-            continue
-        else:
-            ship_list.append(Board(ship_info['size'], ship_info['orientation'], ship_info['location']))
-            temp += 1
-    del temp   
-    
+    """         
     os.system('clear')
     print_board(board_display)
     
@@ -203,9 +202,9 @@ def main():
                 print("Hit!")
                 ship_hit = True
                 board_display[guess_coords['row']][guess_coords['col']] = '@'
-            if ship.destroyed():
-                print("Ship Destroyed!")
-                ship_list.remove(ship)
+                if ship.destroyed():
+                    print("Ship Destroyed!")
+                    ship_list.remove(ship)
                 break
         if not ship_hit:
             board_display[guess_coords['row']][guess_coords['col']] = '#'
