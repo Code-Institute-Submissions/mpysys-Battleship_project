@@ -91,28 +91,34 @@ def print_board(board_array):
     print()
 
 def user_get_row():
-  while True:
-    try:
-      guess = ord(input("Row Guess: ").upper()) - 64
-      if guess in range(1, row_length + 1):
-        return guess - 1
-      else:
-        print("\nOops, that's not even in the ocean.")
-    except TypeError:
-      print("\nPlease enter a letter")
-    except ValueError:
-      print("\nPlease enter a letter")
+    """
+    function to get user input for row coordinate
+    """
+    while True:
+        try:
+            guess = ord(input("Row Guess: ").upper()) - 64
+            if guess in range(1, row_length + 1):
+                return guess - 1
+            else:
+                print("\nOops, that's not even in the ocean.")
+        except TypeError:
+            print("\nPlease enter a letter")
+        except ValueError:
+            print("\nPlease enter a letter")
 
 def user_get_col():
-  while True:
-    try:
-      guess = int(input("Column Guess: "))
-      if guess in range(1, col_length + 1):
-        return guess - 1
-      else:
-        print("\nOops, that's not even in the ocean.")
-    except ValueError:
-      print("\nPlease enter a number")
+    """
+    function to get user input for column coordinate
+    """
+    while True:
+        try:
+            guess = int(input("Column Guess: "))
+            if guess in range(1, col_length + 1):
+                return guess - 1
+            else:
+                print("\nOops, that's not even in the ocean.")
+        except ValueError:
+            print("\nPlease enter a number")
 
 def main():
     """
@@ -135,4 +141,22 @@ def main():
         else:
             break
 
+        ship_hit = False
+        for ship in ship_list:
+            if ship.contains(guess_coords):
+                print("Hit!")
+                ship_hit = True
+                board_display[guess_coords['row']][guess_coords['col']] = 'X'
+            if ship.destroyed():
+                print("Ship Destroyed!")
+                ship_list.remove(ship)
+                break
+        if not ship_hit:
+            board_display[guess_coords['row']][guess_coords['col']] = '#'
+            print("You missed!")
+        
+        print_board(board_display)
+
+        if not ship_list:
+            break
 main()
