@@ -214,6 +214,11 @@ def main():
 
         if not ship_list:
             break
+    
+    if ship_list:
+        print("You lose!")
+    else:
+        print("All the ships are sunk. You win!")
 
 main()
 
