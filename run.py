@@ -62,7 +62,7 @@ class Board:
   
     def destroyed(self): #method checks for status of ships
         for coords in self.coordinates:
-            if board_display[coords['row']][coords['col']] == 'O':
+            if board_display[coords['row']][coords['col']] == '.':
                 return False
             elif board_display[coords['row']][coords['col']] == '#':
                 raise RuntimeError("Board display inaccurate")
