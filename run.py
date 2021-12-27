@@ -59,7 +59,7 @@ class Board:
                 return True
         return False
   
-    def destroyed(self): #method checks for status of ship
+    def destroyed(self): #method checks for status of ships
         for coords in self.coordinates:
             if board_display[coords['row']][coords['col']] == 'O':
                 return False
