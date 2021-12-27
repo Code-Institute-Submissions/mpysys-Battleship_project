@@ -177,6 +177,14 @@ def main():
     Run all program functions and active states
     """         
     os.system('clear')
+    print('-'*35)
+    print('Welcome to Battleships on Python!')
+    print(f'Board size is {row_length}(row) x {col_length}(column)')
+    print('Top left corner is row: 0 and column: 0')
+    print(f'You have {turns} to seek and destroy all enemy ships ')
+    print('-'*35)
+    player_name = input('Enter your player name: \n')
+    print('-'*35)
     print_board(board_display)
     
     for turn in range(turns):
@@ -218,7 +226,10 @@ def main():
     if ship_list:
         print("You lose!")
     else:
+        print("-" * 35)
         print("All the ships are sunk. You win!")
+        print("You have bested a machine!")
+        print("-" * 35)
 
 main()
 
