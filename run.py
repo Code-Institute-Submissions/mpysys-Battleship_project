@@ -183,7 +183,7 @@ def main():
     print('Top left corner is row: 0 and column: 0')
     print(f'You have {turns} turns to seek and destroy all enemy ships ')
     print('-'*35)
-    player_name = input('Enter your player name: \n')
+    player_name = input('Enter your player name to start the game: \n')
     print('-'*35)
     print_board(board_display)
     
