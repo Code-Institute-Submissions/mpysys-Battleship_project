@@ -90,6 +90,30 @@ def print_board(board_array):
         print(str(chr(r + 65)) + " " + " ".join(str(c) for c in board_array[r]))
     print()
 
+def user_get_row():
+  while True:
+    try:
+      guess = ord(input("Row Guess: ").upper()) - 64
+      if guess in range(1, row_length + 1):
+        return guess - 1
+      else:
+        print("\nOops, that's not even in the ocean.")
+    except TypeError:
+      print("\nPlease enter a letter")
+    except ValueError:
+      print("\nPlease enter a letter")
+
+def user_get_col():
+  while True:
+    try:
+      guess = int(input("Column Guess: "))
+      if guess in range(1, col_length + 1):
+        return guess - 1
+      else:
+        print("\nOops, that's not even in the ocean.")
+    except ValueError:
+      print("\nPlease enter a number")
+
 def main():
     """
     Run all program functions
@@ -100,5 +124,15 @@ def main():
         print("Turn:", turn + 1, "of", turns)
         print("Ships left:", len(ship_list))
         print()
+
+        guess_coords = {}
+    
+        guess_coords['row'] = user_get_row()
+        guess_coords['col'] = user_get_col()
+        if board_display[guess_coords['row']][guess_coords['col']] == 'X' or \
+            board_display[guess_coords['row']][guess_coords['col']] == '#':
+            print("\nYou guessed that one already.")
+        else:
+            break
 
 main()
