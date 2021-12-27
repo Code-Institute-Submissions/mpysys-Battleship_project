@@ -90,5 +90,15 @@ def print_board(board_array):
         print(str(chr(r + 65)) + " " + " ".join(str(c) for c in board_array[r]))
     print()
 
+def main():
+    """
+    Run all program functions
+    """
+    print_board(board_display)
+    
+    for turn in range(turns):
+        print("Turn:", turn + 1, "of", turns)
+        print("Ships left:", len(ship_list))
+        print()
 
-print_board(board_display)
+main()
