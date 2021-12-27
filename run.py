@@ -132,21 +132,28 @@ def random_location():
         return {'location': locations[randint(0, len(locations) - 1)], 'size': size,\
      'orientation': orientation}
 
+def validate_user_row_choice(choice):
+    valid_choices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+    if choice.upper() in valid_choices:
+        return True
+    try:
+        number_choice = int(choice)
+        print('Numbers are not valid choice, Please choose a letter')
+    except ValueError:
+        print(f"Please select a valid char from: A, B, C, D, E, F, G, H or I.")
+    finally:
+        return False
+
+
 def user_get_row():
     """
     function to get user input for row coordinate
     """
     while True:
-        try:
-            guess = ord(input("Row Guess: ").upper()) - 64
-            if guess in range(1, row_length + 1):
-                return guess - 1
-            else:
-                print("\nAre you sure that's on the board?")
-        except TypeError:
-            print("\nPlease enter a letter")
-        except ValueError:
-            print("\nPlease enter a letter")
+        choice = input("Row Guess: ").upper()
+        if validate_user_row_choice(choice):
+            guess = ord(choice) - 64
+            return guess - 1
 
 def user_get_col():
     """
