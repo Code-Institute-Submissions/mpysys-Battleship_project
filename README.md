@@ -108,6 +108,7 @@ To deploy this page to Heroku from its GitHub repository, the following steps we
 - Code Institute for the deployment terminal
 - Wikipedia for the details of the battleship game
 - [CodeAcademy](https://www.codecademy.com/catalog/language/python) for their lessons on Python and the battleship game
+- User cloud2236863496 on CodeAcademy forums who gave me the idea for horizontal & vertical display of ships
 
 [Back to top ⇧](#MM's-Battleship)
 ## Acknowledgements
