@@ -75,7 +75,7 @@ row_length = 9 # number of rows
 col_length = 9 # number of columns
 
 board = [[0] * col_length for x in range(row_length)]
-board_display = [["."] * col_length for x in range(row_length)] # list comprehension to display 0's as board that will be passed as argument
+board_display = [["."] * col_length for x in range(row_length)] # list comprehension to display .'s as board that will be passed as argument
 
 ships_to_destroy = 4 # number of ships to destroy
 max_ships_size= 5 # max length of ships
