@@ -116,4 +116,4 @@ To deploy this page to Heroku from its GitHub repository, the following steps we
 - I would like to thank my cousin David who is a solutions architect who helped me troubleshoot my code.
 
 
-(#MM's-Battleship)
+[Back to top ⇧](#MM's-Battleship)
