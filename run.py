@@ -1,6 +1,7 @@
 from random import randint
 import os
 
+
 class Board:
     """
     Main Board class. Sets ship size vertically or horizontally.
@@ -8,6 +9,7 @@ class Board:
     for existing ships in location and to tell the user when they destroyed
     a multi-cell ship.
     """
+
     def __init__(self, size, orientation, location):
         self.size = size
         if orientation == 'horizontal' or orientation == 'vertical':
@@ -15,13 +17,14 @@ class Board:
         else:
             raise ValueError("Value must be 'horizontal' or 'vertical'.")
 
-        #Set coordinates of ship on board
+        # Set coordinates of ship on board
         if orientation == 'horizontal':
             if location['row'] in range(row_length):
                 self.coordinates = []
                 for index in range(size):
                     if location['col'] + index in range(col_length):
-                        self.coordinates.append({'row': location['row'], 'col': location['col'] + index})
+                        self.coordinates.append(
+                            {'row': location['row'], 'col': location['col'] + index})
                     else:
                         raise IndexError("Column is out of range.")
             else:
@@ -31,7 +34,8 @@ class Board:
                 self.coordinates = []
                 for index in range(size):
                     if location['row'] + index in range(row_length):
-                        self.coordinates.append({'row': location['row'] + index, 'col': location['col']})
+                        self.coordinates.append(
+                            {'row': location['row'] + index, 'col': location['col']})
                     else:
                         raise IndexError("Row is out of range.")
             else:
@@ -44,23 +48,23 @@ class Board:
         else:
             self.fillBoard()
 
-    def filled(self): #method to determine if position is filled by a ship
+    def filled(self):  # method to determine if position is filled by a ship
         for coords in self.coordinates:
             if board[coords['row']][coords['col']] == 1:
                 return True
         return False
 
-    def fillBoard(self):#method that assigns ship to coordinate
+    def fillBoard(self):  # method that assigns ship to coordinate
         for coords in self.coordinates:
             board[coords['row']][coords['col']] = 1
 
-    def contains(self, location): #method checks for data validation
+    def contains(self, location):  # method checks for data validation
         for coords in self.coordinates:
             if coords == location:
                 return True
         return False
 
-    def destroyed(self): #method checks for status of ships
+    def destroyed(self):  # method checks for status of ships
         for coords in self.coordinates:
             if board_display[coords['row']][coords['col']] == '.':
                 return False
@@ -68,19 +72,22 @@ class Board:
                 raise RuntimeError("Board display inaccurate")
         return True
 
-# Variables for board and game set up
-turns = 40 # number of turns
 
-row_length = 9 # number of rows
-col_length = 9 # number of columns
+# Variables for board and game set up
+turns = 40  # number of turns
+
+row_length = 9  # number of rows
+col_length = 9  # number of columns
 
 board = [[0] * col_length for x in range(row_length)]
-board_display = [["."] * col_length for x in range(row_length)] # list comprehension to display .'s as board that will be passed as argument
+# list comprehension to display .'s as board that will be passed as argument
+board_display = [["."] * col_length for x in range(row_length)]
 
-ships_to_destroy = 4 # number of ships to destroy
-max_ships_size= 5 # max length of ships
-min_ships_size = 2 # min length of ships
-ship_list = [] # List that stores ship data
+ships_to_destroy = 4  # number of ships to destroy
+max_ships_size = 5  # max length of ships
+min_ships_size = 2  # min length of ships
+ship_list = []  # List that stores ship data
+
 
 def print_board(board_array):
     """
@@ -88,8 +95,10 @@ def print_board(board_array):
     """
     print("\n  " + " ".join(str(x) for x in range(1, col_length + 1)))
     for r in range(row_length):
-        print(str(chr(r + 65)) + " " + " ".join(str(c) for c in board_array[r]))
+        print(str(chr(r + 65)) + " " + " ".join(str(c)
+              for c in board_array[r]))
     print()
+
 
 def search_locations(size, orientation):
     """
@@ -98,7 +107,8 @@ def search_locations(size, orientation):
     locations = []
 
     if orientation != 'horizontal' and orientation != 'vertical':
-        raise ValueError("Orientation must have a value of either 'horizontal' or 'vertical'.")
+        raise ValueError(
+            "Orientation must have a value of either 'horizontal' or 'vertical'.")
 
     if orientation == 'horizontal':
         if size <= col_length:
@@ -118,6 +128,7 @@ def search_locations(size, orientation):
     else:
         return locations
 
+
 def random_location():
     """
     function to randomly place ships on board
@@ -129,8 +140,9 @@ def random_location():
     if locations == 'None':
         return 'None'
     else:
-        return {'location': locations[randint(0, len(locations) - 1)], 'size': size,\
-     'orientation': orientation}
+        return {'location': locations[randint(0, len(locations) - 1)], 'size': size,
+                'orientation': orientation}
+
 
 def validate_user_row_choice(choice):
     valid_choices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
@@ -155,6 +167,7 @@ def user_get_row():
             guess = ord(choice) - 64
             return guess - 1
 
+
 def user_get_col():
     """
     function to get user input for column coordinate
@@ -169,15 +182,18 @@ def user_get_col():
         except ValueError:
             print("\nPlease enter a number")
 
+
 temp = 0
 while temp < ships_to_destroy:
     ship_info = random_location()
     if ship_info == 'None':
         continue
     else:
-        ship_list.append(Board(ship_info['size'], ship_info['orientation'], ship_info['location']))
+        ship_list.append(
+            Board(ship_info['size'], ship_info['orientation'], ship_info['location']))
         temp += 1
 del temp
+
 
 def main():
     """
@@ -208,7 +224,7 @@ def main():
             guess_coords['row'] = user_get_row()
             guess_coords['col'] = user_get_col()
             if board_display[guess_coords['row']][guess_coords['col']] == '@' or \
-                board_display[guess_coords['row']][guess_coords['col']] == '#':
+                    board_display[guess_coords['row']][guess_coords['col']] == '#':
                 print("\nYou guessed that one already.")
             else:
                 break
@@ -241,5 +257,6 @@ def main():
         print("All the ships are sunk. You win!")
         print("You have bested a machine!")
         print("-" * 35)
+
 
 main()
