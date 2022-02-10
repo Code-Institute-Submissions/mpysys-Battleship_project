@@ -156,6 +156,16 @@ def validate_user_row_choice(choice):
     finally:
         return False
 
+def player_name():
+    """
+    function to validate user name
+    """
+    while True:
+        player_name = input('Enter your player name to start the game: \n')
+        if not player_name.isalpha():
+            print("You name must only include alphabetic characters.")
+        else:
+                break
 
 def user_get_row():
     """
@@ -195,6 +205,7 @@ while temp < ships_to_destroy:
 del temp
 
 
+
 def main():
     """
     Run all program functions and active states
@@ -209,9 +220,10 @@ def main():
     print(f'Ships can be more than one in length horizontally or vertically.')
     print(f'# means you missed. @ means you hit.')
     print('-'*35)
-    player_name = input('Enter your player name to start the game: \n')
+    player_name()
     print('-'*35)
     print('-'*35)
+    print('GAME START')
     print_board(board_display)
 
     for turn in range(turns):
