@@ -67,7 +67,7 @@ There are also pre-defined variables that set up the amount of enemy ships to de
 ## Testing
 
 I have manually tested this project by doing the following:
-- Passed the code through PEP8 and confirmed there are no problems other than 'non-errors'
+- Passed the code through PEP8 and confirmed there are no problems.
 - I have tried invalid inputs for rows and columns such as negative values and letters for numbers and vice-versa 
 - Played the games 40 turns in a win state and lose state to ensure outcomes were working
 - Tested in my personal and Heroku terminals
@@ -83,9 +83,9 @@ I have manually tested this project by doing the following:
 
 ### Remaining Bugs
 - No bugs remaining to my knowledge.
--
+
 ### Validator Testing
-- I ran the PEP8 validator which spotted a few typos which I was able to fix. There are a few indentation issues that the system is reporting, but when I check in my run.py file, I do not see them. I have left them as is.
+- I ran the PEP8 validator which spotted a few typos which I was able to fix.
 
 [Back to top ⇧](#MM's-Battleship)
 
