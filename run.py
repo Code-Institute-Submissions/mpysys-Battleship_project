@@ -87,6 +87,7 @@ ships_to_destroy = 4  # number of ships to destroy
 max_ships_size = 5  # max length of ships
 min_ships_size = 2  # min length of ships
 ship_list = []  # List that stores ship data
+not_possible = [] #list for occupied spaces
 
 
 def print_board(board_array):
@@ -209,16 +210,20 @@ def user_get_col():
             print("\nPlease enter a number")
 
 
-temp = 0
-while temp < ships_to_destroy:
-    ship_info = random_location()
-    if ship_info == 'None':
-        continue
-    else:
-        ship_list.append(
-            Board(ship_info['size'], ship_info['orientation'], ship_info['location']))
-        temp += 1
-del temp
+
+def generate_ships():
+    """
+    Create function to generate ships onto the board and check if valid
+    """
+    global asked_ship_number
+    possible_count = (max_ships_size - min_ships_size + 1) * 2 # 2 because vertical or horizontal
+    while len(ship_list) < int(asked_ship_number) and len(not_possible) != possible_count:
+        location = random_location()
+        if location == 'None':
+            continue
+        else:
+            ship_list.append(Ship(location['size'], location['orientation'], location['location']))
+
 
 
 
@@ -241,6 +246,12 @@ def main():
     print('-'*35)
     ask_total_ships()
     print('-'*35)
+    generate_ships()
+    if len(ship_list) != asked_ship_number:
+        print(f'I filled the board with {len(ship_list)}')
+        print(f"... playing with {len(ship_list)} ships...")
+        input("Press Enter to continue...")
+    os.system('clear')
     print('GAME START')
     print_board(board_display)
 
