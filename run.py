@@ -145,15 +145,22 @@ def random_location():
                 'orientation': orientation}
 
 
+def analyse_choice(choice):
+    if choice == "SURRENDER":
+        return True    
+    return validate_user_row_choice(choice)
+
 def validate_user_row_choice(choice):
-    valid_choices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+    valid_choices = []
+    for x in range(board_size):
+        valid_choices.append(chr(x+65))
     if choice.upper() in valid_choices:
         return True
     try:
         number_choice = int(choice)
         print('Numbers are not valid choice, Please choose a letter')
     except ValueError:
-        print(f"Please select a valid char from: A, B, C, D, E, F, G, H or I.")
+        print("Please select a valid char from:" + " ".join( c+", " for c in valid_choices)+".")
     finally:
         return False
 
