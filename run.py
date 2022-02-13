@@ -94,10 +94,9 @@ def print_board(board_array):
     """
     Function that prints the board with alphabetical rows and numerical columns
     """
-    print("\n  " + " ".join(str(x) for x in range(1, col_length + 1)))
-    for r in range (board_size):
-        print(str(chr(r + 65)) + " " + " ".join(str(c)
-              for c in board_array[r]))
+    print("\n " + "".join(("  "+str(x))[-2:] for x in range(1, board_size + 1)))
+    for r in range(board_size):
+        print(str(chr(r + 65)) + "".join( ("  "+display_status(c))[-2:] for c in board_array[r]))
     print()
 
 
@@ -211,7 +210,7 @@ def user_get_col():
     while True:
         try:
             guess = int(input("Column Guess: "))
-            if guess in range(1, col_length + 1):
+            if guess in range(1, board_size + 1):
                 return guess - 1
             else:
                 print("\nAre you sure that's on the board?")
