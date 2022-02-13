@@ -169,16 +169,19 @@ def ask_player_name():
     except EOFError as e:
         print(e)
 
-def total_ships():
+def ask_total_ships():
     """
     function to validate how many ships are on the board
     """
-    while True:
-        ships_to_destroy = input('Enter how many ships to place on the board (max 5): \n')
-        if ships_to_destroy.isalpha():
+    global asked_ship_number
+    try:
+        asked_ship_number = input('Enter how many ships to place on the board: \n')
+        while not asked_ship_number.isdigit():
             print("Please enter a number")
-        else:
-                break
+            asked_ship_number = input('Enter how many ships to place on the board: \n')
+    except EOFError as e:
+        print(e)
+
 
 def user_get_row():
     """
@@ -236,7 +239,7 @@ def main():
     ask_player_name()
     print(f"Hello {player_name}")
     print('-'*35)
-    total_ships()
+    ask_total_ships()
     print('-'*35)
     print('GAME START')
     print_board(board_display)
