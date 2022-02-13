@@ -74,20 +74,19 @@ class Ship:
 
 
 # Variables for board and game set up
+player_name = ""  # Current player name
 turns = 40  # number of turns
 
-board_size = 9  # number of rows
-col_length = 9  # number of columns
-
-board = [[0] * col_length for x in range (board_size)]
+board_size = 9    # board size
+sea = [[0] * board_size for x in range(board_size)]
 # list comprehension to display .'s as board that will be passed as argument
-board_display = [["."] * col_length for x in range (board_size)]
+board_display = [["."] * board_size for x in range(board_size)]
 
-ships_to_destroy = 4  # number of ships to destroy
+asked_ship_number = 4  # number of ships to destroy
 max_ships_size = 5  # max length of ships
-min_ships_size = 2  # min length of ships
+min_ships_size = 3    # min length of ships
 ship_list = []  # List that stores ship data
-not_possible = [] #list for occupied spaces
+not_possible = [] #list of already occupied positions
 
 
 def print_board(board_array):
