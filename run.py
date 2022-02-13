@@ -71,7 +71,7 @@ class Ship:
             sea[first['row']][first['col']] = 5
             sea[last['row']][last['col']] = 6
 
-   def contains(self, location):  # method checks for data validation
+    def contains(self, location):  # method checks for data validation
         for coords in self.coordinates:
             if coords == location:
                 return True
