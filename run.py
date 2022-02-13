@@ -111,6 +111,28 @@ def print_board(board_array):
         print(str(chr(r + 65)) + "".join( ("  "+display_status(c))[-2:] for c in board_array[r]))
     print()
 
+def display_status(value):
+    """
+    Function adding unicode characters
+    """
+    if value==0:
+        return " ."
+    if value==1:
+        return "\u2588"
+    if value==2:
+        return "\u25FC"
+    if value==3:
+        return "\u25B2"
+    if value==4:
+        return "\u25BC"
+    if value==5:
+        return " \u25C0"
+    if value==6:
+        return "\u25B6 "
+    if value==7:
+        return "\u25C6"
+    return value
+
 
 def find_all_possible_locations(size, orientation):
     """
@@ -255,11 +277,14 @@ def main():
     print('-'*35)
     print('Welcome to Battleships on Python!')
     print(f'Board size is {board_size} rows by {board_size} columns')
-    print('For reference, the top left corner is row: 0 and column: 0')
-    print(f'You have {turns} turns to seek and destroy all 4 enemy ships ')
-    print(f'You will have to guess the row and column coordinates of each ship')
+    print(f'You have {turns} turns to beat all enemy ships ')
+    print('-'*35)
+    print(f'You will have to guess the rows and columns coordinates of each ship')
     print(f'Ships can be more than one in length horizontally or vertically.')
+    print('-'*35)
     print(f'# means you missed. @ means you hit.')
+    print('-'*35)
+    print(f'You can type "surrender" at any point to give up and see answers')
     print('-'*35)
     ask_player_name()
     print(f"Hello {player_name}")
@@ -281,17 +306,6 @@ def main():
         print()
 
         guess_coords = {}
-        while True:
-            guess_coords['row'] = user_get_row()
-            guess_coords['col'] = user_get_col()
-            if board_display[guess_coords['row']][guess_coords['col']] == '@' or \
-                    board_display[guess_coords['row']][guess_coords['col']] == '#':
-                print("\nYou guessed that one already.")
-            else:
-                break
-
-        os.system('clear')
-
         surrendered = False
 
         while True:
