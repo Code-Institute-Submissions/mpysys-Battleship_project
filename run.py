@@ -36,8 +36,7 @@ class Ship:
                 for index in range(size):
                     if location['row'] + index in range(board_size):
                         self.coordinates.append(
-                            {'row': location['row'] + index,
-                             'col': location['col']})
+                            {'row': location['row'] + index, 'col': location['col']})
                     else:
                         raise IndexError("Row is out of range.")
             else:
@@ -47,13 +46,11 @@ class Ship:
             print_board(sea)
             print(" ".join(str(coords) for coords in self.coordinates))
             raise IndexError(
-                f"A ship already occupies that space."
-                "{orientation} en {chr(location['row']+65)}"
-                "{location['col']+1} taille {size}")
+                f"A ship already occupies that space. {orientation} en {chr(location['row']+65)}{location['col']+1} taille {size}")
         else:
             self.add_to_the_sea()
 
-    def is_already_taken(self):  # Determines if position is filled by a ship
+    def is_already_taken(self):  # method to determine if position is filled by a ship
         for coords in self.coordinates:
             if sea[coords['row']][coords['col']] > 0:
                 return True
@@ -151,8 +148,7 @@ def find_all_possible_locations(size, orientation):
 
     if orientation != 'horizontal' and orientation != 'vertical':
         raise ValueError(
-            "Orientation must have a value of"
-            "either 'horizontal' or 'vertical'.")
+            "Orientation must have a value of either 'horizontal' or 'vertical'.")
 
     if size <= board_size:
         if orientation == 'horizontal':
@@ -187,8 +183,7 @@ def random_location():
         return 'None'
     else:
         random_index = randint(0, len(locations) - 1)
-        return {'location': locations[random_index],
-                'size': size, 'orientation': orientation}
+        return {'location': locations[random_index], 'size': size, 'orientation': orientation}
 
 
 def analyse_choice(choice):
@@ -278,15 +273,13 @@ def generate_ships():
     global asked_ship_number
     possible_count = (max_ships_size - min_ships_size + 1) * \
         2  # 2 because vertical or horizontal
-    while len(ship_list) < int(asked_ship_number) and
-    len(not_possible) != possible_count:
+    while len(ship_list) < int(asked_ship_number) and len(not_possible) != possible_count:
         location = random_location()
         if location == 'None':
             continue
         else:
             ship_list.append(
-                Ship(location['size'], location['orientation'],
-                     location['location']))
+                Ship(location['size'], location['orientation'], location['location']))
 
 
 def main():
@@ -299,7 +292,7 @@ def main():
     print(f'Board size is {board_size} rows by {board_size} columns')
     print(f'You have {turns} turns to beat all enemy ships ')
     print('-'*35)
-    print(f'You will have to guess the rows and columns coordinates of ships')
+    print(f'You will have to guess the rows and columns coordinates of each ship')
     print(f'Ships can be more than one in length horizontally or vertically.')
     print('-'*35)
     print(f'# means you missed. @ means you hit.')
@@ -333,10 +326,8 @@ def main():
             if r >= 0:
                 guess_coords['row'] = r
                 guess_coords['col'] = user_get_col()
-                if board_display[guess_coords['row']]
-                [guess_coords['col']] == '@' or
-                board_display[guess_coords['row']]
-                [guess_coords['col']] == '#':
+                if board_display[guess_coords['row']][guess_coords['col']] == '@' or \
+                        board_display[guess_coords['row']][guess_coords['col']] == '#':
                     print("\nYou guessed that one already.")
                 else:
                     break
