@@ -19,7 +19,7 @@ class Ship:
 
         # Set coordinates of ship on board
         if orientation == 'horizontal':
-            if location['row'] in range(row_length):
+            if location['row'] in range (board_size):
                 self.coordinates = []
                 for index in range(size):
                     if location['col'] + index in range(col_length):
@@ -33,7 +33,7 @@ class Ship:
             if location['col'] in range(col_length):
                 self.coordinates = []
                 for index in range(size):
-                    if location['row'] + index in range(row_length):
+                    if location['row'] + index in range (board_size):
                         self.coordinates.append(
                             {'row': location['row'] + index, 'col': location['col']})
                     else:
@@ -76,12 +76,12 @@ class Ship:
 # Variables for board and game set up
 turns = 40  # number of turns
 
-row_length = 9  # number of rows
+board_size = 9  # number of rows
 col_length = 9  # number of columns
 
-board = [[0] * col_length for x in range(row_length)]
+board = [[0] * col_length for x in range (board_size)]
 # list comprehension to display .'s as board that will be passed as argument
-board_display = [["."] * col_length for x in range(row_length)]
+board_display = [["."] * col_length for x in range (board_size)]
 
 ships_to_destroy = 4  # number of ships to destroy
 max_ships_size = 5  # max length of ships
@@ -95,13 +95,13 @@ def print_board(board_array):
     Function that prints the board with alphabetical rows and numerical columns
     """
     print("\n  " + " ".join(str(x) for x in range(1, col_length + 1)))
-    for r in range(row_length):
+    for r in range (board_size):
         print(str(chr(r + 65)) + " " + " ".join(str(c)
               for c in board_array[r]))
     print()
 
 
-def search_locations(size, orientation):
+def find_all_possible_locations(size, orientation):
     """
     function to return ship locations
     """
@@ -111,17 +111,16 @@ def search_locations(size, orientation):
         raise ValueError(
             "Orientation must have a value of either 'horizontal' or 'vertical'.")
 
-    if orientation == 'horizontal':
-        if size <= col_length:
-            for r in range(row_length):
-                for c in range(col_length - size + 1):
-                    if 1 not in board[r][c:c+size]:
+    if size <= board_size:
+        if orientation == 'horizontal':
+            for r in range(board_size):
+                for c in range(board_size - size + 1):
+                    if sum(sea[r][c:c + size]) == 0:
                         locations.append({'row': r, 'col': c})
-    elif orientation == 'vertical':
-        if size <= row_length:
-            for c in range(col_length):
-                for r in range(row_length - size + 1):
-                    if 1 not in [board[i][c] for i in range(r, r+size)]:
+        else:
+            for c in range(board_size):
+                for r in range(board_size - size + 1):
+                    if sum([sea[i][c] for i in range(r, r + size)]) == 0:
                         locations.append({'row': r, 'col': c})
 
     if not locations:
@@ -137,13 +136,15 @@ def random_location():
     size = randint(min_ships_size, max_ships_size)
     orientation = 'horizontal' if randint(0, 1) == 0 else 'vertical'
 
-    locations = search_locations(size, orientation)
+    locations = find_all_possible_locations(size, orientation)
     if locations == 'None':
+        index = size*10
+        index = index + 1 if orientation == 'horizontal' else 2
+        not_possible.append(index)
         return 'None'
     else:
-        return {'location': locations[randint(0, len(locations) - 1)], 'size': size,
-                'orientation': orientation}
-
+        random_index = randint(0, len(locations) - 1)
+        return {'location': locations[random_index], 'size': size, 'orientation': orientation}
 
 def analyse_choice(choice):
     if choice == "SURRENDER":
@@ -242,7 +243,7 @@ def main():
     os.system('clear')
     print('-'*35)
     print('Welcome to Battleships on Python!')
-    print(f'Board size is {row_length} rows by {col_length} columns')
+    print(f'Board size is {board_size} rows by {board_size} columns')
     print('For reference, the top left corner is row: 0 and column: 0')
     print(f'You have {turns} turns to seek and destroy all 4 enemy ships ')
     print(f'You will have to guess the row and column coordinates of each ship')
