@@ -19,7 +19,7 @@ class Ship:
 
         # Set coordinates of ship on board
         if orientation == 'horizontal':
-            if location['row'] in range (board_size):
+            if location['row'] in range(board_size):
                 self.coordinates = []
                 for index in range(size):
                     if location['col'] + index in range(board_size):
@@ -33,7 +33,7 @@ class Ship:
             if location['col'] in range(board_size):
                 self.coordinates = []
                 for index in range(size):
-                    if location['row'] + index in range (board_size):
+                    if location['row'] + index in range(board_size):
                         self.coordinates.append(
                             {'row': location['row'] + index, 'col': location['col']})
                     else:
@@ -44,14 +44,16 @@ class Ship:
         if self.is_already_taken():
             print_board(sea)
             print(" ".join(str(coords) for coords in self.coordinates))
-            raise IndexError(f"A ship already occupies that space. {orientation} en {chr(location['row']+65)}{location['col']+1} taille {size}")
+            raise IndexError(
+                f"A ship already occupies that space. {orientation} en {chr(location['row']+65)}{location['col']+1} taille {size}")
         else:
             self.add_to_the_sea()
+
     def is_already_taken(self):  # method to determine if position is filled by a ship
         for coords in self.coordinates:
             if sea[coords['row']][coords['col']] > 0:
                 return True
-        
+
         return False
 
     def add_to_the_sea(self):  # method that assigns ship to coordinate
@@ -62,7 +64,7 @@ class Ship:
                 sea[coords['row']][coords['col']] = 1
             else:
                 sea[coords['row']][coords['col']] = 2
-        if len(self.coordinates)==1:
+        if len(self.coordinates) == 1:
             sea[first['row']][first['col']] = 7
         elif self.orientation == 'vertical':
             sea[first['row']][first['col']] = 3
@@ -99,37 +101,40 @@ asked_ship_number = 4  # number of ships to destroy
 max_ships_size = 5  # max length of ships
 min_ships_size = 3    # min length of ships
 ship_list = []  # List that stores ship data
-not_possible = [] #list of already occupied positions
+not_possible = []  # list of already occupied positions
 
 
 def print_board(board_array):
     """
     Function that prints the board with alphabetical rows and numerical columns
     """
-    print("\n " + "".join(("  "+str(x))[-2:] for x in range(1, board_size + 1)))
+    print("\n " + "".join(("  "+str(x))[-2:]
+          for x in range(1, board_size + 1)))
     for r in range(board_size):
-        print(str(chr(r + 65)) + "".join( ("  "+display_status(c))[-2:] for c in board_array[r]))
+        print(str(chr(r + 65)) + "".join(("  "+display_status(c))
+              [-2:] for c in board_array[r]))
     print()
+
 
 def display_status(value):
     """
     Function adding unicode characters
     """
-    if value==0:
+    if value == 0:
         return " ."
-    if value==1:
+    if value == 1:
         return "\u2588"
-    if value==2:
+    if value == 2:
         return "\u25FC"
-    if value==3:
+    if value == 3:
         return "\u25B2"
-    if value==4:
+    if value == 4:
         return "\u25BC"
-    if value==5:
+    if value == 5:
         return " \u25C0"
-    if value==6:
+    if value == 6:
         return "\u25B6 "
-    if value==7:
+    if value == 7:
         return "\u25C6"
     return value
 
@@ -179,10 +184,12 @@ def random_location():
         random_index = randint(0, len(locations) - 1)
         return {'location': locations[random_index], 'size': size, 'orientation': orientation}
 
+
 def analyse_choice(choice):
     if choice == "SURRENDER":
-        return True    
+        return True
     return validate_user_row_choice(choice)
+
 
 def validate_user_row_choice(choice):
     valid_choices = []
@@ -194,9 +201,11 @@ def validate_user_row_choice(choice):
         number_choice = int(choice)
         print('Numbers are not valid choice, Please choose a letter')
     except ValueError:
-        print("Please select a valid char from:" + " ".join( c+", " for c in valid_choices)+".")
+        print("Please select a valid char from:" +
+              " ".join(c+", " for c in valid_choices)+".")
     finally:
         return False
+
 
 def ask_player_name():
     """
@@ -211,16 +220,19 @@ def ask_player_name():
     except EOFError as e:
         print(e)
 
+
 def ask_total_ships():
     """
     function to validate how many ships are on the board
     """
     global asked_ship_number
     try:
-        asked_ship_number = input('Enter how many ships to place on the board: \n')
+        asked_ship_number = input(
+            'Enter how many ships to place on the board: \n')
         while not asked_ship_number.isdigit():
             print("Please enter a number")
-            asked_ship_number = input('Enter how many ships to place on the board: \n')
+            asked_ship_number = input(
+                'Enter how many ships to place on the board: \n')
     except EOFError as e:
         print(e)
 
@@ -237,6 +249,7 @@ def user_get_row():
     guess = ord(choice) - 64
     return guess - 1
 
+
 def user_get_col():
     """
     function to get user input for column coordinate
@@ -252,21 +265,20 @@ def user_get_col():
             print("\nPlease enter a number")
 
 
-
 def generate_ships():
     """
     Create function to generate ships onto the board and check if valid
     """
     global asked_ship_number
-    possible_count = (max_ships_size - min_ships_size + 1) * 2 # 2 because vertical or horizontal
+    possible_count = (max_ships_size - min_ships_size + 1) * \
+        2  # 2 because vertical or horizontal
     while len(ship_list) < int(asked_ship_number) and len(not_possible) != possible_count:
         location = random_location()
         if location == 'None':
             continue
         else:
-            ship_list.append(Ship(location['size'], location['orientation'], location['location']))
-
-
+            ship_list.append(
+                Ship(location['size'], location['orientation'], location['location']))
 
 
 def main():
@@ -322,7 +334,6 @@ def main():
                 surrendered = True
                 break
 
-
         os.system('clear')
 
         if surrendered:
@@ -333,7 +344,8 @@ def main():
                 if ship.contains(guess_coords):
                     print("Hit!")
                     ship_hit = True
-                    board_display[guess_coords['row']][guess_coords['col']] = '@'
+                    board_display[guess_coords['row']
+                                  ][guess_coords['col']] = '@'
                     if ship.destroyed():
                         print("Ship Destroyed!")
                         ship_list.remove(ship)
@@ -357,3 +369,4 @@ def main():
 
 
 main()
+
