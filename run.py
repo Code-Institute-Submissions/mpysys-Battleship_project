@@ -156,14 +156,27 @@ def validate_user_row_choice(choice):
     finally:
         return False
 
-def player_name():
+def ask_player_name():
     """
     function to validate user name
     """
-    while True:
+    global player_name
+    try:
         player_name = input('Enter your player name to start the game: \n')
-        if not player_name.isalpha():
+        while not player_name.isalpha():
             print("You name must only include alphabetic characters.")
+            player_name = input('Enter your player name : \n')
+    except EOFError as e:
+        print(e)
+
+def total_ships():
+    """
+    function to validate how many ships are on the board
+    """
+    while True:
+        ships_to_destroy = input('Enter how many ships to place on the board (max 5): \n')
+        if ships_to_destroy.isalpha():
+            print("Please enter a number")
         else:
                 break
 
@@ -220,8 +233,10 @@ def main():
     print(f'Ships can be more than one in length horizontally or vertically.')
     print(f'# means you missed. @ means you hit.')
     print('-'*35)
-    player_name()
+    ask_player_name()
+    print(f"Hello {player_name}")
     print('-'*35)
+    total_ships()
     print('-'*35)
     print('GAME START')
     print_board(board_display)
