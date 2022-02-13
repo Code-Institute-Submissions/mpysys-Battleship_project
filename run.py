@@ -22,7 +22,7 @@ class Ship:
             if location['row'] in range (board_size):
                 self.coordinates = []
                 for index in range(size):
-                    if location['col'] + index in range(col_length):
+                    if location['col'] + index in range(board_size):
                         self.coordinates.append(
                             {'row': location['row'], 'col': location['col'] + index})
                     else:
@@ -30,7 +30,7 @@ class Ship:
             else:
                 raise TypeError("Row is out of range.")
         elif orientation == 'vertical':
-            if location['col'] in range(col_length):
+            if location['col'] in range(board_size):
                 self.coordinates = []
                 for index in range(size):
                     if location['row'] + index in range (board_size):
@@ -41,22 +41,28 @@ class Ship:
             else:
                 raise IndexError("Column is out of range.")
 
-        if self.filled():
-            print_board(board)
+        if self.is_already_taken():
+            print_board(sea)
             print(" ".join(str(coords) for coords in self.coordinates))
-            raise IndexError("A ship already occupies that space.")
+            raise IndexError(f"A ship already occupies that space. {orientation} en {chr(location['row']+65)}{location['col']+1} taille {size}")
         else:
-            self.fillBoard()
+            self.add_to_the_sea()
+    def is_already_taken(self):  # method to determine if position is filled by a ship
+        for coords in self.coordinates:
+            if sea[coords['row']][coords['col']] > 0:
+                return True
+        
+        return False
 
     def filled(self):  # method to determine if position is filled by a ship
         for coords in self.coordinates:
-            if board[coords['row']][coords['col']] == 1:
+            if board_display[coords['row']][coords['col']] == 1:
                 return True
         return False
 
     def fillBoard(self):  # method that assigns ship to coordinate
         for coords in self.coordinates:
-            board[coords['row']][coords['col']] = 1
+            board_display[coords['row']][coords['col']] = 1
 
     def contains(self, location):  # method checks for data validation
         for coords in self.coordinates:
@@ -72,6 +78,22 @@ class Ship:
                 raise RuntimeError("Board display inaccurate")
         return True
 
+    def add_to_the_sea(self):  # method that assigns ship to coordinate
+        first = self.coordinates[0]
+        last = self.coordinates[len(self.coordinates)-1]
+        for coords in self.coordinates:
+            if self.orientation == 'vertical':
+                sea[coords['row']][coords['col']] = 1
+            else:
+                sea[coords['row']][coords['col']] = 2
+        if len(self.coordinates)==1:
+            sea[first['row']][first['col']] = 7
+        elif self.orientation == 'vertical':
+            sea[first['row']][first['col']] = 3
+            sea[last['row']][last['col']] = 4
+        else:
+            sea[first['row']][first['col']] = 5
+            sea[last['row']][last['col']] = 6
 
 # Variables for board and game set up
 player_name = ""  # Current player name
