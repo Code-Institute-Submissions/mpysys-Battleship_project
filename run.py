@@ -292,23 +292,45 @@ def main():
 
         os.system('clear')
 
-        ship_hit = False
-        for ship in ship_list:
-            if ship.contains(guess_coords):
-                print("Hit!")
-                ship_hit = True
-                board_display[guess_coords['row']][guess_coords['col']] = '@'
-                if ship.destroyed():
-                    print("Ship Destroyed!")
-                    ship_list.remove(ship)
+        surrendered = False
+
+        while True:
+            r = user_get_row()
+            if r >= 0:
+                guess_coords['row'] = r
+                guess_coords['col'] = user_get_col()
+                if board_display[guess_coords['row']][guess_coords['col']] == '@' or \
+                        board_display[guess_coords['row']][guess_coords['col']] == '#':
+                    print("\nYou guessed that one already.")
+                else:
+                    break
+            else:
+                surrendered = True
                 break
-        if not ship_hit:
-            board_display[guess_coords['row']][guess_coords['col']] = '#'
-            print("You missed!")
 
-        print_board(board_display)
 
-        if not ship_list:
+        os.system('clear')
+
+        if surrendered:
+            print_board(sea)
+        else:
+            ship_hit = False
+            for ship in ship_list:
+                if ship.contains(guess_coords):
+                    print("Hit!")
+                    ship_hit = True
+                    board_display[guess_coords['row']][guess_coords['col']] = '@'
+                    if ship.destroyed():
+                        print("Ship Destroyed!")
+                        ship_list.remove(ship)
+                    break
+            if not ship_hit:
+                board_display[guess_coords['row']][guess_coords['col']] = '#'
+                print("You missed!")
+
+            print_board(board_display)
+
+        if not ship_list or surrendered:
             break
 
     if ship_list:
