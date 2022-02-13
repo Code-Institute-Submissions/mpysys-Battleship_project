@@ -2,7 +2,7 @@ from random import randint
 import os
 
 
-class Board:
+class Ship:
     """
     Main Board class. Sets ship size vertically or horizontally.
     Contains methods to fill the board with ships, to check coordinates
@@ -186,14 +186,15 @@ def ask_total_ships():
 
 def user_get_row():
     """
-    function to get user input for row coordinate
+    function to get user input for row coordinate and add surrender
     """
-    while True:
+    choice = input("Row Guess: ").upper()
+    while not analyse_choice(choice):
         choice = input("Row Guess: ").upper()
-        if validate_user_row_choice(choice):
-            guess = ord(choice) - 64
-            return guess - 1
-
+    if choice == "SURRENDER":
+        return -1
+    guess = ord(choice) - 64
+    return guess - 1
 
 def user_get_col():
     """
