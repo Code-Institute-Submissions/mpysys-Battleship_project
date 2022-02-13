@@ -54,30 +54,6 @@ class Ship:
         
         return False
 
-    def filled(self):  # method to determine if position is filled by a ship
-        for coords in self.coordinates:
-            if board_display[coords['row']][coords['col']] == 1:
-                return True
-        return False
-
-    def fillBoard(self):  # method that assigns ship to coordinate
-        for coords in self.coordinates:
-            board_display[coords['row']][coords['col']] = 1
-
-    def contains(self, location):  # method checks for data validation
-        for coords in self.coordinates:
-            if coords == location:
-                return True
-        return False
-
-    def destroyed(self):  # method checks for status of ships
-        for coords in self.coordinates:
-            if board_display[coords['row']][coords['col']] == '.':
-                return False
-            elif board_display[coords['row']][coords['col']] == '#':
-                raise RuntimeError("Board display inaccurate")
-        return True
-
     def add_to_the_sea(self):  # method that assigns ship to coordinate
         first = self.coordinates[0]
         last = self.coordinates[len(self.coordinates)-1]
@@ -94,6 +70,21 @@ class Ship:
         else:
             sea[first['row']][first['col']] = 5
             sea[last['row']][last['col']] = 6
+
+   def contains(self, location):  # method checks for data validation
+        for coords in self.coordinates:
+            if coords == location:
+                return True
+        return False
+
+    def destroyed(self):  # method checks for status of ships
+        for coords in self.coordinates:
+            if board_display[coords['row']][coords['col']] == '.':
+                return False
+            elif board_display[coords['row']][coords['col']] == '#':
+                raise RuntimeError("Board display inaccurate")
+        return True
+
 
 # Variables for board and game set up
 player_name = ""  # Current player name
