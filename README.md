@@ -49,6 +49,10 @@ The main requirements for this project were to make a logic game which a working
 	- Notify if value in Column is off the board or not a number
 	- Cannot input the same answer twice
 ![validation](./assets/readme-files/features-validation.png)
+### Features added on 13/3 for resubmission
+- **ASK** for user to input the number of enemy ships to be placed on board
+- **SURRENDER** user can type 'surrender' at any point once the game has launched to see solution
+
 ### Features to Implement in the future
 - **Allow** user to modify grid size and number of ships on the board
 - **Create** a player board and let **player** choose where to put his ships
@@ -72,6 +76,14 @@ I have manually tested this project by doing the following:
 - Played the games 40 turns in a win state and lose state to ensure outcomes were working
 - Tested in my personal and Heroku terminals
 
+**TESTING SCENARIOS**:
+I have tested various scenarios of data input to test validation
+- User name with numbers, letters, empty
+- User row with numbers or empty
+- User column with letters or empty
+- typing surrender at various stages of the game
+- I have tried placing 1,2,3,4,5,6... 500 ships on the board
+
 [Back to top ⇧](#MM's-Battleship)
 
 ## Issues and Bugs
@@ -79,10 +91,13 @@ I have manually tested this project by doing the following:
 - I wanted to return letters as rows and numbers as columns. In order to do so I had to learn about ASCII, chr() and ord() for the `user_get_row` function as well as the `print_board`
 - Validating the user choice was a challenge as I was not able to return a specific message for an error according to the type of error. For example if the user input a negative letter, a letter off the board or a number, the error was the same. Additionally, there was an issue where if I entered a number instead of a letter, the system would return that the value was not on the board versus it not being inaccurate. In order to go around this I had to create another method`validate_user_row_choice` to help validate the type of data that the user input as a row.
 - Faced indentation issues when it came to the `temp`variable which would return an error stating that the variable was not defined. Took me a while to figure out that `del temp`was within the `while loop`
-
+- I had to revisit most of the code and rename the Class from Board to Ship to make it more explicit - also updated various methods and functions to give developers looking at the code a better understanding of what the function does
+- I had issues with spacing while using unicode in the surrender feature, which had me test out various scenarios
+- I was having issues with variables in functions as they were stored locally and not accessible globally. I started using `global` variables to help
+- I also had an issue when requesting users for the number of ships to place on the board due to having a function booting at game launch. This was fixed thanks to the `def generate_ships()` function.
 
 ### Remaining Bugs
-- No bugs remaining to my knowledge.
+- THE ONLY ISSUE left is the "line too long (90 > 79 characters)" (E501) on PEP8 at line 280, 334 and 335. I cannot seem to fix it in github.
 
 ### Validator Testing
 - I ran the PEP8 validator which spotted a few typos which I was able to fix.
