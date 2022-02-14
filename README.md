@@ -52,7 +52,7 @@ The main requirements for this project were to make a logic game which a working
 ### Features added on 13/3 for resubmission
 - **ASK** for user to input the number of enemy ships to be placed on board
 - **SURRENDER** user can type 'surrender' at any point once the game has launched to see solution
-
+![surrender](./assets/readme-files/surrender.png)
 ### Features to Implement in the future
 - **Allow** user to modify grid size and number of ships on the board
 - **Create** a player board and let **player** choose where to put his ships
